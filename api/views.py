@@ -4,8 +4,14 @@ from base.models import Word, Time
 from .serializers import WordSerializer, TimeSerializer
 
 @api_view(['GET'])
-def getData(request):
+def getWords(request):
     words = Word.objects.all()
+    serializer = WordSerializer(words, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getWordsByLevel(request, level):
+    words = Word.objects.filter(level=level)
     serializer = WordSerializer(words, many=True)
     return Response(serializer.data)
 
@@ -19,6 +25,12 @@ def addWord(request):
 @api_view(['GET'])
 def getLeaderboard(request):
     times = Time.objects.all()
+    serializer = TimeSerializer(times, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getLeaderboardLevel(request, level):
+    times = Time.objects.filter(level=level)
     serializer = TimeSerializer(times, many=True)
     return Response(serializer.data)
 
