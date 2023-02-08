@@ -7,3 +7,11 @@ class Word(models.Model):
 
     def __str__(self) -> str:
         return self.word
+
+class Time(models.Model):
+    name = models.CharField(max_length=64)
+    time = models.IntegerField()
+    level = models.IntegerField()
+
+    def __str__(self) -> str:
+        return self.name
