@@ -24,13 +24,13 @@ def addWord(request):
 
 @api_view(['GET'])
 def getLeaderboard(request):
-    times = Time.objects.all()
+    times = Time.objects.all().order_by('time').values()
     serializer = TimeSerializer(times, many=True)
     return Response(serializer.data)
 
 @api_view(['GET'])
 def getLeaderboardLevel(request, level):
-    times = Time.objects.filter(level=level)
+    times = Time.objects.filter(level=level).order_by('time').values()
     serializer = TimeSerializer(times, many=True)
     return Response(serializer.data)
 
