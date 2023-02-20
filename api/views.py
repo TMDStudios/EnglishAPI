@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from base.models import Word, Time
 from .serializers import WordSerializer, TimeSerializer
+from random import shuffle
 
 @api_view(['GET'])
 def getWords(request):
@@ -13,7 +14,13 @@ def getWords(request):
 def getWordsByLevel(request, level):
     words = Word.objects.filter(level=level)
     serializer = WordSerializer(words, many=True)
-    return Response(serializer.data)
+
+    wordList = []
+    for i in serializer.data:
+        wordList.append(i)
+    shuffle(wordList)
+
+    return Response(wordList[:10])
 
 @api_view(['POST'])
 def addWord(request):
