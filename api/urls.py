@@ -7,5 +7,7 @@ urlpatterns = [
     # path('add/', views.addWord),
     path('leaderboard/', views.getLeaderboard),
     path('leaderboard/<int:level>', views.getLeaderboardLevel),
-    path('leaderboard/add/', views.addTime)
+    path('leaderboard/add/', views.addTime),
+    path('mistakes/', views.getMistakes),
+    path('mistakes/add/', views.addMistake)
 ]

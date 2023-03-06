@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from base.models import Word, Time
-from .serializers import WordSerializer, TimeSerializer
+from base.models import Word, Time, Mistake
+from .serializers import WordSerializer, TimeSerializer, MistakeSerializer
 from random import shuffle
 
 @api_view(['GET'])
@@ -44,6 +44,19 @@ def getLeaderboardLevel(request, level):
 @api_view(['POST'])
 def addTime(request):
     serializer = TimeSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getMistakes(request):
+    mistakes = Mistake.objects.all()
+    serializer = MistakeSerializer(mistakes, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def addMistake(request):
+    serializer = MistakeSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)

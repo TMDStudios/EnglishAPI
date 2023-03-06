@@ -15,3 +15,11 @@ class Time(models.Model):
 
     def __str__(self) -> str:
         return self.name
+    
+class Mistake(models.Model):
+    word = models.CharField(max_length=64)
+    issue = models.TextField(max_length=1023)
+    author = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return self.word
