@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from base.models import Word, Time, Mistake
 from .serializers import WordSerializer, TimeSerializer, MistakeSerializer
 from random import shuffle
+from django.db.models import Q
 
 @api_view(['GET'])
 def getWords(request):
@@ -11,8 +12,12 @@ def getWords(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def getWordsByLevel(request, level):
+def getWordsByLevel(request, level, activity):
     words = Word.objects.filter(level=level)
+    if activity==2:
+        words = Word.objects.filter(level=level).filter(~Q(regular="null"))
+    if activity==3:
+        words = Word.objects.filter(level=level).filter(~Q(conjugation="null"))
     serializer = WordSerializer(words, many=True)
 
     wordList = []

@@ -4,6 +4,8 @@ class Word(models.Model):
     word = models.CharField(max_length=64)
     level = models.IntegerField()
     sentence = models.TextField(max_length=512)
+    regular = models.CharField(max_length=8, null=True)
+    conjugation = models.CharField(max_length=64, null=True)
 
     def __str__(self) -> str:
         return self.word
