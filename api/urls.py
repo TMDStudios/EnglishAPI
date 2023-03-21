@@ -9,5 +9,7 @@ urlpatterns = [
     path('leaderboard/<int:level>', views.getLeaderboardLevel),
     path('leaderboard/add/', views.addTime),
     path('mistakes/', views.getMistakes),
-    path('mistakes/add/', views.addMistake)
+    path('mistakes/add/', views.addMistake),
+    path('bannerclicks/', views.getBannerClicks),
+    path('bannerclicks/add/', views.addBannerClick)
 ]

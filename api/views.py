@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from base.models import Word, Time, Mistake
-from .serializers import WordSerializer, TimeSerializer, MistakeSerializer
+from base.models import Word, Time, Mistake, BannerClick
+from .serializers import WordSerializer, TimeSerializer, MistakeSerializer, BannerClickSerializer
 from random import shuffle
 from django.db.models import Q
 
@@ -62,6 +62,19 @@ def getMistakes(request):
 @api_view(['POST'])
 def addMistake(request):
     serializer = MistakeSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getBannerClicks(request):
+    bannerClicks = BannerClick.objects.all()
+    serializer = BannerClickSerializer(bannerClicks, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def addBannerClick(request):
+    serializer = BannerClickSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)

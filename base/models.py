@@ -25,3 +25,10 @@ class Mistake(models.Model):
 
     def __str__(self) -> str:
         return self.word
+    
+class BannerClick(models.Model):
+    banner = models.CharField(max_length=255)
+    time = models.CharField(max_length=255)
+
+    def __str__(self) -> str:
+        return self.banner

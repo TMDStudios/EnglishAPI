@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from base.models import Word, Time, Mistake
+from base.models import Word, Time, Mistake, BannerClick
 
 class WordSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,4 +14,9 @@ class TimeSerializer(serializers.ModelSerializer):
 class MistakeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Mistake
+        fields = '__all__'
+
+class BannerClickSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BannerClick
         fields = '__all__'
