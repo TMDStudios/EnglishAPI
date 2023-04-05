@@ -87,3 +87,8 @@ def addBannerClick(request):
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
+
+@api_view(['DELETE'])
+def deleteTable(request, level):
+    Word.objects.filter(level=level).delete()
+    return Response(200)
