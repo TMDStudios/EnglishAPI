@@ -13,11 +13,20 @@ def getWords(request):
 
 @api_view(['GET'])
 def getWordsByLevel(request, level, activity):
-    words = Word.objects.filter(level=level)
+    if level == 0:
+        words = Word.objects
+    else:
+        words = Word.objects.filter(level=level)
     if activity==2:
-        words = Word.objects.filter(level=level).filter(~Q(regular="null"))
+        if level == 0:
+            words = Word.objects.filter(~Q(regular="null"))
+        else:
+            words = Word.objects.filter(level=level).filter(~Q(regular="null"))
     if activity==3:
-        words = Word.objects.filter(level=level).filter(~Q(conjugation="null"))
+        if level == 0:
+            words = Word.objects.filter(~Q(conjugation="null"))
+        else:
+            words = Word.objects.filter(level=level).filter(~Q(conjugation="null"))
     serializer = WordSerializer(words, many=True)
 
     wordList = []
