@@ -58,7 +58,10 @@ def getLeaderboardLevel(request, level):
 @api_view(['POST'])
 def addTime(request):
     serializer = TimeSerializer(data=request.data)
-    if serializer.is_valid():
+    # print('NAME: ', request.data.get('name'))
+    
+    # Filter out Postman requests
+    if serializer.is_valid() and request.headers.get('User-Agent').find('PostmanRuntime')==-1:
         serializer.save()
     return Response(serializer.data)
 
