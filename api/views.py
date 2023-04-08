@@ -18,6 +18,7 @@ def getWordsByLevel(request, level, activity):
         words = Word.objects
     else:
         words = Word.objects.filter(level=level)
+
     if activity==2:
         if level == 0:
             words = Word.objects.filter(~Q(regular="null"))
@@ -60,6 +61,7 @@ def getLeaderboardLevel(request, level):
 def addTime(request):
     # Filter profanity (due to the nature of the word list used to filter profanity the 'profanity_filter' file is omitted in this repo)
     name = profanity_filter.clean_name(request.data.get('name'))
+    request.data._mutable=True
     request.data.update({"name": name})
     serializer = TimeSerializer(data=request.data)
     
