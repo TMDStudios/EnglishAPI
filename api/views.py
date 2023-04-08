@@ -4,6 +4,7 @@ from base.models import Word, Time, Mistake, BannerClick
 from .serializers import WordSerializer, TimeSerializer, MistakeSerializer, BannerClickSerializer
 from random import shuffle
 from django.db.models import Q
+from . import profanity_filter
 
 @api_view(['GET'])
 def getWords(request):
@@ -57,8 +58,10 @@ def getLeaderboardLevel(request, level):
 
 @api_view(['POST'])
 def addTime(request):
+    # Filter profanity (due to the nature of the word list used to filter profanity the 'profanity_filter' file is omitted in this repo)
+    name = profanity_filter.clean_name(request.data.get('name'))
+    request.data.update({"name": name})
     serializer = TimeSerializer(data=request.data)
-    # print('NAME: ', request.data.get('name'))
     
     # Filter out Postman requests
     if serializer.is_valid() and request.headers.get('User-Agent').find('PostmanRuntime')==-1:
