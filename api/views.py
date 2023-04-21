@@ -4,6 +4,7 @@ from base.models import Word, Time, Mistake, BannerClick
 from .serializers import WordSerializer, TimeSerializer, MistakeSerializer, BannerClickSerializer
 from random import shuffle
 from django.db.models import Q
+from django.db.models.functions import Length
 from . import profanity_filter
 
 @api_view(['GET'])
@@ -29,6 +30,11 @@ def getWordsByLevel(request, level, activity):
             words = Word.objects.filter(~Q(conjugation="null"))
         else:
             words = Word.objects.filter(level=level).filter(~Q(conjugation="null"))
+    if activity==4:
+        if level == 0:
+            words = Word.objects.annotate(text_len=Length('word')).filter(text_len__gt=4)
+        else:
+            words = Word.objects.filter(level=level).annotate(text_len=Length('word')).filter(text_len__gt=4)
     serializer = WordSerializer(words, many=True)
 
     wordList = []
