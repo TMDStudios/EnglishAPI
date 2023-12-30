@@ -12,5 +12,7 @@ urlpatterns = [
     path('mistakes/', views.getMistakes),
     path('mistakes/add/', views.addMistake),
     path('bannerclicks/', views.getBannerClicks),
-    path('bannerclicks/add/', views.addBannerClick)
+    path('bannerclicks/add/', views.addBannerClick),
+    path('games/add/', views.addGame),
+    path('games/', views.getGames)
 ]

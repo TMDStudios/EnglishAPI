@@ -3,3 +3,6 @@ db.sqlite3
 .env
 /api/profanity_filter.py
 /api/__pycache__/profanity_filter.cpython-37.pyc
+/base/migrations
+/base/__pycache__
+/EnglishAPI/__pycache__

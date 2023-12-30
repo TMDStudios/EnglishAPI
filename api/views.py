@@ -1,7 +1,7 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from base.models import Word, Time, Mistake, BannerClick
-from .serializers import WordSerializer, TimeSerializer, MistakeSerializer, BannerClickSerializer
+from base.models import Word, Time, Mistake, BannerClick, Game
+from .serializers import WordSerializer, TimeSerializer, MistakeSerializer, BannerClickSerializer, GameSerializer, FullGameSerializer
 from random import shuffle
 from django.db.models import Q
 from django.db.models.functions import Length
@@ -106,3 +106,16 @@ def addBannerClick(request):
 def deleteTable(request, level):
     Word.objects.filter(level=level).delete()
     return Response(200)
+
+@api_view(['GET'])
+def getGames(request):
+    games = Game.objects.all()
+    serializer = FullGameSerializer(games, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def addGame(request):
+    serializer = GameSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
