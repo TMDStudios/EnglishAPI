@@ -14,5 +14,6 @@ urlpatterns = [
     path('bannerclicks/', views.getBannerClicks),
     path('bannerclicks/add/', views.addBannerClick),
     path('games/add/', views.addGame),
-    path('games/', views.getGames)
+    path('games/', views.getGames),
+    path('unapproved-games/', views.getUnapprovedGames)
 ]

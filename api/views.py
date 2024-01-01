@@ -109,7 +109,13 @@ def deleteTable(request, level):
 
 @api_view(['GET'])
 def getGames(request):
-    games = Game.objects.all()
+    games = Game.objects.filter(approved=1)
+    serializer = FullGameSerializer(games, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getUnapprovedGames(request):
+    games = Game.objects.filter(approved=0)
     serializer = FullGameSerializer(games, many=True)
     return Response(serializer.data)
 
